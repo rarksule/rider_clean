@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:rider_clean/core/network/api_classes.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../constants/constants.dart';
+import '../localizations/app_language.dart';
+import '../localizations/app_localizations.dart';
+import '../localizations/language_en.dart';
+
+part 'global_providers.g.dart';
+
+@Riverpod(keepAlive: true)
+class Language extends _$Language {
+  String _selectedLanguage = defaultLanguage;
+  @override
+  AppLanguage build() {
+    return LanguageEn();
+  }
+
+  String get selectedLanguage => _selectedLanguage;
+
+  Future<void> setLanguage(String aCode) async {
+    _selectedLanguage = aCode.validate(value: defaultLanguage);
+    state = await const AppLocalizations().load(Locale(_selectedLanguage));
+  }
+}
+
+@Riverpod(keepAlive: true)
+class Theme extends _$Theme {
+  @override
+  ThemeMode build() {
+    return ThemeMode.system;
+  }
+
+  void toggleTheme(ThemeMode mode) {
+    state = mode;
+  }
+}
+
+@riverpod
+ApiUrl nodeApiUrl(Ref ref) {
+  return ApiUrl(
+    localBase: ApiConfig.nodeTstServer,
+    remoteBase: ApiConfig.nodePrdServer,
+  );
+}
+
+@riverpod
+ApiUrl phpApiUrl(Ref ref) {
+  return ApiUrl(
+    localBase: ApiConfig.phpTestServer,
+    remoteBase: ApiConfig.phpProdServer,
+  );
+}
