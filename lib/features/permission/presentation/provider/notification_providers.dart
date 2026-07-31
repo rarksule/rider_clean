@@ -8,7 +8,7 @@ part 'notification_providers.g.dart';
 
 // final
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Notifcation extends _$Notifcation {
   @override
   FutureOr<bool> build() {

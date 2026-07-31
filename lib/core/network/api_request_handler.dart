@@ -68,6 +68,7 @@ class ApiRequestHandler {
 
       return _handleResponse(response);
     } catch (e) {
+      log("error log \n\n\n\n $e");
       rethrow;
     }
   }

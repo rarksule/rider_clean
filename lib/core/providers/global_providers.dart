@@ -38,15 +38,38 @@ class Theme extends _$Theme {
 }
 
 @riverpod
+Map<String, dynamic> ips(Ref ref) {
+  const String nodeIp = String.fromEnvironment('NodeIp');
+  const String phpIp = String.fromEnvironment('PHPIp');
+  const String mainIp = String.fromEnvironment('Ip');
+  const bool local = bool.fromEnvironment('isLocal', defaultValue: isLocal);
+
+  return {
+    "nodeIp": nodeurl ?? nodeIp,
+    "phpIp": phpurl ?? phpIp,
+    "mainIp": mainIp.isEmpty ? remoteUrl : mainIp,
+    "local": local,
+  };
+}
+
+@riverpod
 ApiUrl nodeApiUrl(Ref ref) {
-  return ApiUrl(
-    remoteBase: ApiConfig.nodeServer,
-  );
+  var provider = ref.watch(ipsProvider);
+  String nodeIp = provider['nodeIp'];
+  String mainIp = provider['mainIp'];
+  bool isLocal = provider["local"];
+  String baseUrl = nodeIp.isEmptyOrNull ? mainIp : nodeIp;
+
+  return ApiUrl(remoteBase: isLocal ? "$baseUrl:3000/api/v1" : "$baseUrl/api/v1");
 }
 
 @riverpod
 ApiUrl phpApiUrl(Ref ref) {
-  return ApiUrl(
-    remoteBase: ApiConfig.phpServer,
-  );
+  var provider = ref.watch(ipsProvider);
+  String phpIp = provider['phpIp'];
+  String mainIp = provider['mainIp'];
+  bool isLocal = provider["local"];
+  String baseUrl = phpIp.isEmptyOrNull ? mainIp : phpIp;
+
+  return ApiUrl(remoteBase: isLocal ? "$baseUrl:1000/api/v1" : "$baseUrl/api/v1");
 }

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-
 // =======================
 // Brand Colors
 // =======================
@@ -116,3 +115,8 @@ const int phoneLengthLimit = 9;
 const int defaultOtpTimer = 60;
 
 const riderConst = 'RIDER';
+
+const remoteUrl = "http://172.20.76.1744";
+const phpurl = null;
+const nodeurl = null;
+const isLocal = true;
