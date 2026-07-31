@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rider_clean/features/auth/presentation/screens/verify_phone_screen.dart';
+import 'package:rider_clean/features/permission/presentation/provider/notification_providers.dart';
 import '../../../../core/providers/global_providers.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants/common.dart';
@@ -33,13 +34,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   }
 
   Future<void> init() async {
-    // appSetting();
-
-    // if (getStringAsync(PLAYER_ID).isEmpty) {
-    //   if (!isWeb) {
-    //     await saveOneSignalPlayerId();
-    //   }
-    // }
+    ref.read(notifcationProvider.notifier).getToken();
     phoneController.text = getStringAsync(phoneNumber).replaceFirst('+251', '');
   }
 
@@ -51,6 +46,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   Future<void> submit() async {
     if (formKey.currentState!.validate()) {
       if (isAcceptedTc) {
+        setValue(
+          phoneNumber,
+          '$defaultCountryCode${phoneController.text.trim()}',
+        );
         ref
             .read(sendOtpFlowProvider.notifier)
             .sendOtp('$defaultCountryCode${phoneController.text.trim()}');
@@ -112,11 +111,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             children: [
               Container(
                 height: context.height() * 0.30,
-                color:primaryColor,
+                color: primaryColor,
                 child: Center(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: context.theme.brightness == Brightness.dark ? Colors.black : Colors.white,
+                      color: context.theme.brightness == Brightness.dark
+                          ? Colors.black
+                          : Colors.white,
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(appLogo, height: 130, width: 130),

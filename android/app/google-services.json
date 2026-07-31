@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "204561222919",
+    "project_id": "shiw-ride",
+    "storage_bucket": "shiw-ride.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204561222919:android:87d6a4e1cedf11bf39c9a2",
+        "android_client_info": {
+          "package_name": "com.example.rider_clean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy7Lsj9I08qE4cOUm_9siwzdZKJafcZXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204561222919:android:e5ff86204587150e39c9a2",
+        "android_client_info": {
+          "package_name": "com.rarksule.shiwdriver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy7Lsj9I08qE4cOUm_9siwzdZKJafcZXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204561222919:android:8202cbe8e9770a4a39c9a2",
+        "android_client_info": {
+          "package_name": "com.rarksule.shiwrider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy7Lsj9I08qE4cOUm_9siwzdZKJafcZXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

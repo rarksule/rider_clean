@@ -23,7 +23,5 @@ class UserModel extends UserEntity {
     );
   }
 
-//  UserEntity toEntity() {
-//     return 
-//   }
+
 }

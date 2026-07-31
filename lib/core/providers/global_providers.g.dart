@@ -150,7 +150,7 @@ final class NodeApiUrlProvider
   }
 }
 
-String _$nodeApiUrlHash() => r'219178be5c14d56ed21abed521f8262ff3c9435d';
+String _$nodeApiUrlHash() => r'8d4d5cdb78176346ed43498b7a6aa08cd570fe37';
 
 @ProviderFor(phpApiUrl)
 final phpApiUrlProvider = PhpApiUrlProvider._();
@@ -191,4 +191,4 @@ final class PhpApiUrlProvider
   }
 }
 
-String _$phpApiUrlHash() => r'eb245f43f71c379d5be22ee693395eb5f7545d7d';
+String _$phpApiUrlHash() => r'107d2fd52766ada8fc2f570d3d8bce4467e7d817';

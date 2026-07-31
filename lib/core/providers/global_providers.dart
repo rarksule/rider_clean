@@ -40,15 +40,13 @@ class Theme extends _$Theme {
 @riverpod
 ApiUrl nodeApiUrl(Ref ref) {
   return ApiUrl(
-    localBase: ApiConfig.nodeTstServer,
-    remoteBase: ApiConfig.nodePrdServer,
+    remoteBase: ApiConfig.nodeServer,
   );
 }
 
 @riverpod
 ApiUrl phpApiUrl(Ref ref) {
   return ApiUrl(
-    localBase: ApiConfig.phpTestServer,
-    remoteBase: ApiConfig.phpProdServer,
+    remoteBase: ApiConfig.phpServer,
   );
 }

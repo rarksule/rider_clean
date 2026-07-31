@@ -176,11 +176,11 @@ abstract class _$SendOtpFlow extends $AsyncNotifier<String> {
   }
 }
 
-@ProviderFor(verifyOtpFlow)
+@ProviderFor(VerifyOtpFlow)
 final verifyOtpFlowProvider = VerifyOtpFlowProvider._();
 
 final class VerifyOtpFlowProvider
-    extends $AsyncNotifierProvider<verifyOtpFlow, LoginResult?> {
+    extends $AsyncNotifierProvider<VerifyOtpFlow, LoginResult?> {
   VerifyOtpFlowProvider._()
     : super(
         from: null,
@@ -197,12 +197,12 @@ final class VerifyOtpFlowProvider
 
   @$internal
   @override
-  verifyOtpFlow create() => verifyOtpFlow();
+  VerifyOtpFlow create() => VerifyOtpFlow();
 }
 
-String _$verifyOtpFlowHash() => r'0e236ab70b2ae2617d719e03f806b9cee9916dc6';
+String _$verifyOtpFlowHash() => r'97f10f127defd00b74ca83cabc9e9bd52f70af56';
 
-abstract class _$verifyOtpFlow extends $AsyncNotifier<LoginResult?> {
+abstract class _$VerifyOtpFlow extends $AsyncNotifier<LoginResult?> {
   FutureOr<LoginResult?> build();
   @$mustCallSuper
   @override

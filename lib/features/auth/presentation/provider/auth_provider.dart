@@ -46,7 +46,7 @@ class SendOtpFlow extends _$SendOtpFlow {
 }
 
 @riverpod
-class verifyOtpFlow extends _$verifyOtpFlow {
+class VerifyOtpFlow extends _$VerifyOtpFlow {
   @override
   FutureOr<LoginResult?> build() => null;
 

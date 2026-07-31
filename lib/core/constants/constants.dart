@@ -107,7 +107,7 @@ const String phoneVerifiedAtKey = "phoneVerifiedAt";
 const String active = "active";
 const String selectedLanguage = 'selectedLanguage';
 const String phoneNumber = "phoneNumber";
-const String playerId = "playerId";
+const String fcmTokenKey = "Fcm Token";
 
 // Strings
 const String defaultLanguage = 'en';
