@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/datasource/auth_data_source.dart';
 import '../../data/repositories/auth_repository_impl.dart';
+import '../../domain/entity/auth_session.dart';
 import '../../domain/entity/login_result.dart';
 import '../../domain/entity/user_entity.dart';
 import '../../domain/usecases/auth_usecase.dart';
@@ -60,6 +61,23 @@ class VerifyOtpFlow extends _$VerifyOtpFlow {
     final result = await ref
         .read(authUsecaseProvider)
         .login(phoneNumber: phoneNumber, otp: otp, otpId: otpId);
+
+    state = result.fold(
+      (failure) => AsyncError(failure.message, StackTrace.current),
+      (data) => AsyncData(data),
+    );
+  }
+}
+
+@riverpod
+class GetJWTFlow extends _$GetJWTFlow {
+  @override
+  FutureOr<AuthSession?> build() => null;
+
+  Future<void> get() async {
+    state = const AsyncLoading();
+
+    final result = await ref.read(authUsecaseProvider).getJwt();
 
     state = result.fold(
       (failure) => AsyncError(failure.message, StackTrace.current),

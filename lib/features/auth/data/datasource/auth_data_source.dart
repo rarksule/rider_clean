@@ -1,5 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:rider_clean/features/auth/domain/entity/auth_session.dart';
+import '../../../../core/constants/common.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../core/constants/enums.dart';
 import '../../../../core/constants/url_constants.dart';
 import '../../../../core/error/exceptions.dart';
@@ -19,7 +22,7 @@ class AuthDataSource {
   Future<Either<Failure, String>> sendOtp({required String phone}) async {
     try {
       final url = phpUrl.getUri(UrlConstants.initializeLogin);
-
+      log("url\n\n\n\n$url");
       final res = await ApiRequestHandler.request(
         url,
         method: HttpMethod.post,
@@ -59,10 +62,19 @@ class AuthDataSource {
       );
       if (res.isSuccess) {
         final data = res.data!;
-        return Right(
-          LoginResult(
-            user: UserModel.fromJson(data['data']),
-            session: AuthSession(apiKey: data['data']['api_token']),
+          SecureStorage.setValue(apiKeyKey,  data['data']['api_token']);
+        final jwt = await getJwt();
+
+        return jwt.fold(
+          (failure) => Left(failure),
+          (authSession) => Right(
+            LoginResult(
+              user: UserModel.fromJson(data['data']),
+              session: AuthSession(
+                apiKey: data['data']['api_token'],
+                accessToken: authSession.accessToken,
+              ),
+            ),
           ),
         );
       } else {
@@ -80,4 +92,35 @@ class AuthDataSource {
       return Left(const UnknownFailure());
     }
   }
+
+  /// Step 3:get jwt from node api 
+  Future<Either<Failure, AuthSession>> getJwt() async {
+    try {
+      final url = nodeUrl.getUri(UrlConstants.getJwt);
+
+      final res = await ApiRequestHandler.request(url, method: HttpMethod.post);
+      if (res.isSuccess) {
+        final data = res.data!;
+        return Right(
+          AuthSession(
+            accessToken: data["accessToken"],
+          ),
+        );
+      } else {
+        return Left(ProcessFailure(res.message));
+      }
+    } on UnauthorizedException catch (e) {
+      return Left(InvalidCredentialsFailure(e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on JsonException catch (e) {
+      return Left(JsonFailure(e.message));
+    } on ProcessException catch (e) {
+      return Left(ProcessFailure(e.message));
+    } catch (_) {
+      return Left(const UnknownFailure());
+    }
+  }
+
+  
 }

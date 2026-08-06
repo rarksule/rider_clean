@@ -1,11 +1,9 @@
 class AuthSession {
-  final String apiKey;
-  final String? refreshToken;
+  final String? apiKey;
   final String? accessToken;
 
   AuthSession({
-    required this.apiKey,
-    this.refreshToken,
+    this.apiKey,
     this.accessToken,
   });
 }

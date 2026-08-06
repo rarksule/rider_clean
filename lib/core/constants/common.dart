@@ -80,7 +80,7 @@ class SecureStorage {
     return await storage.delete(key: key);
   }
 
-  Future<void> setValue(String key, dynamic value, {bool print = true}) async {
+  static Future<void> setValue(String key, dynamic value, {bool print = true}) async {
   if (value == null) {
     if (print) log('$key - value is null');
     return Future.value();

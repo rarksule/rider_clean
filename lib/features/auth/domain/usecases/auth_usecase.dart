@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
+import '../entity/auth_session.dart';
 import '../entity/login_result.dart';
 import '../entity/user_entity.dart';
 import '../repositories/auth_repository.dart';
@@ -19,6 +20,10 @@ class AuthUsecase {
     required String otpId,
   }) async {
     return repository.login(phone: phoneNumber, otp: otp, otpId: otpId);
+  }
+
+  Future<Either<Failure, AuthSession>> getJwt() async {
+    return repository.getJwt();
   }
 
   Future<void> registerUser(UserEntity userData, String name, String email) {

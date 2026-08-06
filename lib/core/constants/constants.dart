@@ -107,6 +107,8 @@ const String active = "active";
 const String selectedLanguage = 'selectedLanguage';
 const String phoneNumber = "phoneNumber";
 const String fcmTokenKey = "Fcm Token";
+const String accessTokenKey = "AcessToken";
+const String apiKeyKey = "ApiKEY";
 
 // Strings
 const String defaultLanguage = 'en';
@@ -116,7 +118,7 @@ const int defaultOtpTimer = 60;
 
 const riderConst = 'RIDER';
 
-const remoteUrl = "http://172.20.76.1744";
+const remoteUrl = "http://172.20.76.23";
 const phpurl = null;
 const nodeurl = null;
-const isLocal = true;
+const usePorts = true;

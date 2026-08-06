@@ -111,53 +111,6 @@ abstract class _$Theme extends $Notifier<ThemeMode> {
   }
 }
 
-@ProviderFor(ips)
-final ipsProvider = IpsProvider._();
-
-final class IpsProvider
-    extends
-        $FunctionalProvider<
-          Map<String, dynamic>,
-          Map<String, dynamic>,
-          Map<String, dynamic>
-        >
-    with $Provider<Map<String, dynamic>> {
-  IpsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'ipsProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$ipsHash();
-
-  @$internal
-  @override
-  $ProviderElement<Map<String, dynamic>> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  Map<String, dynamic> create(Ref ref) {
-    return ips(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(Map<String, dynamic> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<Map<String, dynamic>>(value),
-    );
-  }
-}
-
-String _$ipsHash() => r'911667368eb53c65fd33943fb0f8795e779a3829';
-
 @ProviderFor(nodeApiUrl)
 final nodeApiUrlProvider = NodeApiUrlProvider._();
 
@@ -197,7 +150,7 @@ final class NodeApiUrlProvider
   }
 }
 
-String _$nodeApiUrlHash() => r'95af22acbef1058207159a8ca749b71c70f0e33a';
+String _$nodeApiUrlHash() => r'9df31c7b6b1f413e8542fdcee7e933c06674ff16';
 
 @ProviderFor(phpApiUrl)
 final phpApiUrlProvider = PhpApiUrlProvider._();
@@ -238,4 +191,4 @@ final class PhpApiUrlProvider
   }
 }
 
-String _$phpApiUrlHash() => r'4dc1435acf71e364406e462040bbf20e42fa6e5c';
+String _$phpApiUrlHash() => r'985364373cc4624e9a56c4acb18bd45ad7cca43a';

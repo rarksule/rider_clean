@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:rider_clean/core/constants/constants.dart';
 import 'package:rider_clean/core/error/exceptions.dart';
+import '../constants/common.dart';
 import '../constants/enums.dart';
 import 'api_classes.dart';
 
@@ -23,7 +25,7 @@ class ApiRequestHandler {
 
     log("\n\n $url \n $body\n");
 
-    headers ??= {HttpHeaders.contentTypeHeader: 'application/json'};
+    headers ??= {HttpHeaders.contentTypeHeader: 'application/json',HttpHeaders.authorizationHeader:await SecureStorage.getStringAsync(apiKeyKey),HttpHeaders.cookieHeader:"accessToken:${await SecureStorage.getStringAsync(accessTokenKey)};"};
 
     try {
       log('Request: $method $url\nHeaders: $headers\nBody: ${body ?? {}}');

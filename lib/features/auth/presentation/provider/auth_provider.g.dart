@@ -220,6 +220,50 @@ abstract class _$VerifyOtpFlow extends $AsyncNotifier<LoginResult?> {
   }
 }
 
+@ProviderFor(GetJWTFlow)
+final getJWTFlowProvider = GetJWTFlowProvider._();
+
+final class GetJWTFlowProvider
+    extends $AsyncNotifierProvider<GetJWTFlow, AuthSession?> {
+  GetJWTFlowProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getJWTFlowProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getJWTFlowHash();
+
+  @$internal
+  @override
+  GetJWTFlow create() => GetJWTFlow();
+}
+
+String _$getJWTFlowHash() => r'3354043f987c72e5c404e1dce4a5aebcd2d6e203';
+
+abstract class _$GetJWTFlow extends $AsyncNotifier<AuthSession?> {
+  FutureOr<AuthSession?> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<AuthSession?>, AuthSession?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<AuthSession?>, AuthSession?>,
+              AsyncValue<AuthSession?>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
 @ProviderFor(RegisterFlow)
 final registerFlowProvider = RegisterFlowProvider._();
 

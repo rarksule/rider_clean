@@ -20,22 +20,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initialize(aLocaleLanguageList: languageList);
-  
-  
+
   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
 
-  
-
   FirebaseMessaging.instance.onTokenRefresh
       .listen((fcmToken) {
-        // TODO: If necessary send token to application server.
-        log("\n\n fcm refreshed Token $fcmToken\n\n");
-        // Note: This callback is fired at each app startup and whenever a new
-        // token is generated.
+        setValue(fcmTokenKey, fcmToken);
       })
       .onError((err) {
         // Error getting token.

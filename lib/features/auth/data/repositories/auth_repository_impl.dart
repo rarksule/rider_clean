@@ -1,7 +1,11 @@
 // import '../../../../core/errors/failures.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:nb_utils/nb_utils.dart';
+import '../../../../core/constants/common.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../core/error/failures.dart';
+import '../../domain/entity/auth_session.dart';
 import '../../domain/entity/login_result.dart';
 import '../../domain/entity/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -20,6 +24,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, AuthSession>> getJwt() async {
+    final response = await authDataSource.getJwt();
+
+    return response;
+  }
+
+  @override
   Future<Either<Failure, LoginResult>> login({
     required String phone,
     required String otp,
@@ -30,7 +41,13 @@ class AuthRepositoryImpl implements AuthRepository {
       otp: otp,
       otpId: otpId,
     );
-
+    if (response.isRight()) {
+      response.fold((l) => {}, (result) {
+        setValue(isLoggedInKey, true);
+        setValue(userIdkey, result.user.id);
+        SecureStorage.setValue(accessTokenKey, result.session.accessToken);
+      });
+    }
     return response;
   }
 
