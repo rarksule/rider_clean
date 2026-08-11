@@ -89,14 +89,24 @@ class GetJWTFlow extends _$GetJWTFlow {
 @riverpod
 class RegisterFlow extends _$RegisterFlow {
   @override
-  FutureOr<void> build() {}
+  FutureOr<String?> build() => null;
 
-  Future<void> register(UserEntity data, String name, String email) async {
+  Future<void> register({
+    required String address,
+    required String name,
+    required String email,
+    required String phone,
+  }) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
-      await ref.read(authUsecaseProvider).registerUser(data, name, email);
-    });
+    final result = await ref
+        .read(authUsecaseProvider)
+        .registerUser(address:address, phone:phone, name:name, email:email);
+
+    state = result.fold(
+      (failure) => AsyncError(failure.message, StackTrace.current),
+      (data) => AsyncData(data),
+    );
   }
 }
 

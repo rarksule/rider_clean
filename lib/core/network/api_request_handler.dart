@@ -23,12 +23,22 @@ class ApiRequestHandler {
     //   throw 'Your internet is not working';
     // }
 
-    log("\n\n $url \n $body\n");
 
-    headers ??= {HttpHeaders.contentTypeHeader: 'application/json',HttpHeaders.authorizationHeader:await SecureStorage.getStringAsync(apiKeyKey),HttpHeaders.cookieHeader:"accessToken:${await SecureStorage.getStringAsync(accessTokenKey)};"};
+    headers ??= {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      // HttpHeaders.authorizationHeader: await SecureStorage.getStringAsync(
+      //   apiKeyKey,
+      // ),
+      HttpHeaders.cookieHeader:
+          "accessToken:${await SecureStorage.getStringAsync(accessTokenKey)};",
+      // HttpHeaders.acceptHeader : 'application/json',
+    };
+    body ??= {};
 
     try {
-      log('Request: $method $url\nHeaders: $headers\nBody: ${body ?? {}}');
+      log(
+        'Request: $method $url\nHeaders: $headers\nBody: $body',
+      );
 
       late http.Response response;
 
@@ -66,7 +76,7 @@ class ApiRequestHandler {
               );
       }
 
-      log('Response ($method): ${response.statusCode}\n${response.body}');
+      log('Response ($method): ${response.statusCode}\n\n${response.body}\n\n');
 
       return _handleResponse(response);
     } catch (e) {
@@ -131,6 +141,7 @@ class ApiRequestHandler {
     } else {
       try {
         final body = jsonDecode(response.body);
+
         final String message = body['message'] ?? 'response Parse Error';
         return ApiResponse.error(message);
       } catch (e) {
@@ -140,3 +151,4 @@ class ApiRequestHandler {
     }
   }
 }
+

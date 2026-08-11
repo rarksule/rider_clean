@@ -52,11 +52,18 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> registerUser(
-    UserEntity userData,
-    String name,
-    String email,
-  ) async {
-    throw UnimplementedError('Registration flow is not implemented yet.');
+  Future<Either<Failure, String>> registerUser({
+    required String address,
+    required String name,
+    required String email,
+    required String phone,
+  }) async {
+    final response = await authDataSource.register(
+      address: address,
+      name: name,
+      email: email,
+      phone: phone,
+    );
+    return response;
   }
 }

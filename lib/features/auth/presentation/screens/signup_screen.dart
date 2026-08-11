@@ -1,10 +1,11 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rider_clean/core/providers/global_providers.dart';
+import 'package:rider_clean/features/auth/presentation/provider/auth_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/common.dart';
@@ -20,17 +21,17 @@ class SignUpScreen extends ConsumerStatefulWidget {
 class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  TextEditingController firstController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController userNameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
   FocusNode firstNameFocus = FocusNode();
   FocusNode lastNameFocus = FocusNode();
-  FocusNode userNameFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
-  FocusNode phoneFocus = FocusNode(); 
+  FocusNode addressFocus = FocusNode();
+  FocusNode phoneFocus = FocusNode();
   String? privacyPolicyUrl;
   String? termsConditionUrl;
   bool isAcceptedTc = true;
@@ -38,6 +39,17 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(languageProvider);
+    // ref.read(.notifier)
+    ref.listen(registerFlowProvider, (previous, next) {
+      next.whenOrNull(
+        data: (result) async {
+          toast(result, length: Toast.LENGTH_LONG);
+        },
+        error: (error, stack) {
+          toast(error.toString());
+        },
+      );
+    });
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -56,7 +68,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               ),
               32.height,
               AppTextField(
-                controller: firstController,
+                controller: firstNameController,
                 focus: firstNameFocus,
                 nextFocus: lastNameFocus,
                 autoFocus: false,
@@ -68,7 +80,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               AppTextField(
                 controller: lastNameController,
                 focus: lastNameFocus,
-                nextFocus: userNameFocus,
+                nextFocus: emailFocus,
                 autoFocus: false,
                 textFieldType: TextFieldType.OTHER,
                 errorThisFieldRequired: errorThisFieldRequired,
@@ -76,24 +88,25 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               ),
               20.height,
               AppTextField(
-                controller: userNameController,
-                focus: userNameFocus,
-                nextFocus: emailFocus,
-                autoFocus: false,
-                textFieldType: TextFieldType.USERNAME,
-                errorThisFieldRequired: errorThisFieldRequired,
-                decoration: Common.inputDecoration(label: language.userName),
-              ),
-              20.height,
-              AppTextField(
                 controller: emailController,
                 focus: emailFocus,
-                nextFocus: phoneFocus,
+                nextFocus: addressFocus,
                 autoFocus: false,
                 textFieldType: TextFieldType.EMAIL,
                 keyboardType: TextInputType.emailAddress,
                 errorThisFieldRequired: errorThisFieldRequired,
                 decoration: Common.inputDecoration(label: language.email),
+              ),
+              20.height,
+              AppTextField(
+                controller: addressController,
+                focus: addressFocus,
+                nextFocus: phoneFocus,
+                autoFocus: false,
+                textFieldType: TextFieldType.OTHER,
+                keyboardType: TextInputType.multiline,
+                errorThisFieldRequired: errorThisFieldRequired,
+                decoration: Common.inputDecoration(label: language.address),
               ),
               20.height,
               AppTextField(
@@ -150,7 +163,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   }
                   return null;
                 },
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                keyboardType: TextInputType.phone,
+                // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               16.height,
               Row(
@@ -184,10 +198,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 if (!termsConditionUrl.isEmptyOrNull) {
-                                      launchUrl(Uri.parse(termsConditionUrl!));
-                                    } else {
-                                      toast(language.txtURLEmpty);
-                                    }
+                                  launchUrl(Uri.parse(termsConditionUrl!));
+                                } else {
+                                  toast(language.txtURLEmpty);
+                                }
                               },
                           ),
                           TextSpan(text: ' & ', style: secondaryTextStyle()),
@@ -197,10 +211,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 if (!privacyPolicyUrl.isEmptyOrNull) {
-                                      launchUrl(Uri.parse(privacyPolicyUrl!));
-                                    } else {
-                                      toast(language.txtURLEmpty);
-                                    }
+                                  launchUrl(Uri.parse(privacyPolicyUrl!));
+                                } else {
+                                  toast(language.txtURLEmpty);
+                                }
                               },
                           ),
                         ],
@@ -243,5 +257,21 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     );
   }
 
-  void verifyInput() {}
+  void verifyInput() {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    if (!isAcceptedTc) {
+      return toast("accpt tc");
+    }
+
+    ref
+        .read(registerFlowProvider.notifier)
+        .register(
+          address: addressController.text,
+          name: "${firstNameController.text} ${lastNameController.text}",
+          email: emailController.text,
+          phone: "$defaultCountryCode${phoneController.text}",
+        );
+  }
 }

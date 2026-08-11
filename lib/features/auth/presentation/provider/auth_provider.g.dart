@@ -268,7 +268,7 @@ abstract class _$GetJWTFlow extends $AsyncNotifier<AuthSession?> {
 final registerFlowProvider = RegisterFlowProvider._();
 
 final class RegisterFlowProvider
-    extends $AsyncNotifierProvider<RegisterFlow, void> {
+    extends $AsyncNotifierProvider<RegisterFlow, String?> {
   RegisterFlowProvider._()
     : super(
         from: null,
@@ -288,19 +288,19 @@ final class RegisterFlowProvider
   RegisterFlow create() => RegisterFlow();
 }
 
-String _$registerFlowHash() => r'bc2e75925c7c8ceb55d1390627b555bd66719cef';
+String _$registerFlowHash() => r'48b778908fc9430f1fbeecf97dd6b86c23c87c1e';
 
-abstract class _$RegisterFlow extends $AsyncNotifier<void> {
-  FutureOr<void> build();
+abstract class _$RegisterFlow extends $AsyncNotifier<String?> {
+  FutureOr<String?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
+              AnyNotifier<AsyncValue<String?>, String?>,
+              AsyncValue<String?>,
               Object?,
               Object?
             >;

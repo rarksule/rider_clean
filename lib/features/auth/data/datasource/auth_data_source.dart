@@ -62,12 +62,12 @@ class AuthDataSource {
       );
       if (res.isSuccess) {
         final data = res.data!;
-          SecureStorage.setValue(apiKeyKey,  data['data']['api_token']);
+        SecureStorage.setValue(apiKeyKey, data['data']['api_token']);
         final jwt = await getJwt();
-
+         
         return jwt.fold(
           (failure) => Left(failure),
-          (authSession) => Right(
+          (authSession) => Right(           
             LoginResult(
               user: UserModel.fromJson(data['data']),
               session: AuthSession(
@@ -93,7 +93,7 @@ class AuthDataSource {
     }
   }
 
-  /// Step 3:get jwt from node api 
+  /// Step 3:get jwt from node api
   Future<Either<Failure, AuthSession>> getJwt() async {
     try {
       final url = nodeUrl.getUri(UrlConstants.getJwt);
@@ -101,11 +101,7 @@ class AuthDataSource {
       final res = await ApiRequestHandler.request(url, method: HttpMethod.post);
       if (res.isSuccess) {
         final data = res.data!;
-        return Right(
-          AuthSession(
-            accessToken: data["accessToken"],
-          ),
-        );
+        return Right(AuthSession(accessToken: data["accessToken"]));
       } else {
         return Left(ProcessFailure(res.message));
       }
@@ -122,5 +118,41 @@ class AuthDataSource {
     }
   }
 
-  
+  /// Step 1: Register if new User
+  Future<Either<Failure, String>> register({
+    required String address,
+    required String name,
+    required String email,
+    required String phone,
+  }) async {
+    try {
+      final url = phpUrl.getUri(UrlConstants.register);
+      log("url\n\n\n\n$url");
+      final res = await ApiRequestHandler.request(
+        url,
+        method: HttpMethod.post,
+        body: {
+          "email": email,
+          "phone_number": phone,
+          "full_name": name,
+          "address": address,
+        },
+      );
+      if (res.isSuccess) {
+        return Right(res.data!["message"]);
+      } else {
+        throw ProcessException(res.message);
+      }
+    } on UnauthorizedException catch (e) {
+      return Left(InvalidCredentialsFailure(e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on JsonException catch (e) {
+      return Left(JsonFailure(e.message));
+    } on ProcessException catch (e) {
+      return Left(ProcessFailure(e.message));
+    } catch (_) {
+      return Left(const UnknownFailure());
+    }
+  }
 }

@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 import '../entity/auth_session.dart';
 import '../entity/login_result.dart';
-import '../entity/user_entity.dart';
 import '../repositories/auth_repository.dart';
 
 class AuthUsecase {
@@ -26,9 +25,17 @@ class AuthUsecase {
     return repository.getJwt();
   }
 
-  Future<void> registerUser(UserEntity userData, String name, String email) {
-    // Implement registration logic here
-    // This might involve calling a method on the repository to create a new user
-    throw UnimplementedError('Registration not implemented yet');
+  Future<Either<Failure, String>> registerUser({
+    required String address,
+    required String name,
+    required String email,
+    required String phone,
+  }) async {
+    return repository.registerUser(
+      address: address,
+      phone: phone,
+      name: name,
+      email: email,
+    );
   }
 }
