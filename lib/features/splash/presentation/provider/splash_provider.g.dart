@@ -55,7 +55,7 @@ final class SplashRemoteDataSourceProvider
 }
 
 String _$splashRemoteDataSourceHash() =>
-    r'22d9f4eb21621846f9f60933fe14b8fb8368d347';
+    r'47333de22b83c79d445bbab991db0cc6190d1ce1';
 
 @ProviderFor(splashLocalDataSource)
 final splashLocalDataSourceProvider = SplashLocalDataSourceProvider._();

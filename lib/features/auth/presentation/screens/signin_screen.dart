@@ -23,7 +23,7 @@ class SignInScreen extends ConsumerStatefulWidget {
 class _SignInScreenState extends ConsumerState<SignInScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
-
+  Map<String, dynamic> data = {};
   String? privacyPolicyUrl;
   String? termsConditionUrl;
   bool isAcceptedTc = true;
@@ -36,6 +36,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   Future<void> init() async {
     ref.read(notifcationProvider.notifier).getToken();
     phoneController.text = getStringAsync(phoneNumber).replaceFirst('+251', '');
+    ref.read(getAppSettingsProvider.notifier).call();
   }
 
   @override
@@ -52,7 +53,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         );
         ref
             .read(sendOtpFlowProvider.notifier)
-            .sendOtp('$defaultCountryCode${phoneController.text.trim()}');
+            .call('$defaultCountryCode${phoneController.text.trim()}');
       } else {
         toast(
           ref.read(languageProvider).pleaseAcceptTermsOfServicePrivacyPolicy,
@@ -61,21 +62,6 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     }
   }
 
-  Future<void> appSetting() async {
-    // await getAppSettingApi().then((value) {
-    //   if (value.privacyPolicyModel != null) {
-    //     appStore.setPrivacyPolicy(value.privacyPolicyModel!.value.validate());
-    //     privacyPolicy = value.privacyPolicyModel!.value.validate();
-    //   }
-    //   if (value.termsCondition != null) {
-    //     appStore.setTermsCondition(value.termsCondition!.value.validate());
-    //     termsCondition = value.termsCondition!.value.validate();
-    //   }
-    //   setState(() {});
-    // }).catchError((error) {
-    //   log(error.toString());
-    // });
-  }
   bool _hasNavigated = false;
 
   @override
@@ -83,6 +69,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     final language = ref.watch(languageProvider);
     final otpFlow = ref.watch(sendOtpFlowProvider);
     final _ = ref.watch(notifcationProvider);
+    ref.listen(getAppSettingsProvider, (previous, next) {
+      next.whenOrNull(
+        data: (result) async {
+          data = result;
+          privacyPolicyUrl = data["privacy_policy_url"];
+          termsConditionUrl = data["terms_condition_url"];
+        },
+        error: (error, stack) {
+          toast(error.toString());
+        },
+      );
+    });
     ref.listen(sendOtpFlowProvider, (previous, next) {
       next.whenOrNull(
         data: (result) async {
@@ -288,7 +286,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                               style: boldTextStyle(color: primaryColor),
                             ).onTap(() {
                               // context.goNamed(signUpRoute);
-                              const SignUpScreen().launch(
+                              SignUpScreen(data: data).launch(
                                 context,
                                 duration: const Duration(milliseconds: 500),
                                 pageRouteAnimation: PageRouteAnimation.Slide,

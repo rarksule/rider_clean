@@ -48,7 +48,7 @@ final class AuthDataSourceProvider
   }
 }
 
-String _$authDataSourceHash() => r'8832687b24047c59a4fff480975fb7a5ac32e85a';
+String _$authDataSourceHash() => r'c3aea35aa2516b371870c34d9befd6410507e770';
 
 @ProviderFor(authRepository)
 final authRepositoryProvider = AuthRepositoryProvider._();
@@ -156,7 +156,7 @@ final class SendOtpFlowProvider
   SendOtpFlow create() => SendOtpFlow();
 }
 
-String _$sendOtpFlowHash() => r'86fb54ccd4617422d44cb74369e8e72de75e3df6';
+String _$sendOtpFlowHash() => r'50711532de0755c8d07396fb1d49fa4175efcc7b';
 
 abstract class _$SendOtpFlow extends $AsyncNotifier<String> {
   FutureOr<String> build();
@@ -169,6 +169,55 @@ abstract class _$SendOtpFlow extends $AsyncNotifier<String> {
             as $ClassProviderElement<
               AnyNotifier<AsyncValue<String>, String>,
               AsyncValue<String>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
+@ProviderFor(GetAppSettings)
+final getAppSettingsProvider = GetAppSettingsProvider._();
+
+final class GetAppSettingsProvider
+    extends $AsyncNotifierProvider<GetAppSettings, Map<String, dynamic>> {
+  GetAppSettingsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getAppSettingsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getAppSettingsHash();
+
+  @$internal
+  @override
+  GetAppSettings create() => GetAppSettings();
+}
+
+String _$getAppSettingsHash() => r'15b4e8f4c16f9d01fcf252f4d434fa7f1db73c14';
+
+abstract class _$GetAppSettings extends $AsyncNotifier<Map<String, dynamic>> {
+  FutureOr<Map<String, dynamic>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<Map<String, dynamic>>, Map<String, dynamic>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<Map<String, dynamic>>,
+                Map<String, dynamic>
+              >,
+              AsyncValue<Map<String, dynamic>>,
               Object?,
               Object?
             >;
@@ -200,7 +249,7 @@ final class VerifyOtpFlowProvider
   VerifyOtpFlow create() => VerifyOtpFlow();
 }
 
-String _$verifyOtpFlowHash() => r'97f10f127defd00b74ca83cabc9e9bd52f70af56';
+String _$verifyOtpFlowHash() => r'36faf766091f4f189210b1215ea73a893a2fb65d';
 
 abstract class _$VerifyOtpFlow extends $AsyncNotifier<LoginResult?> {
   FutureOr<LoginResult?> build();
@@ -244,7 +293,7 @@ final class GetJWTFlowProvider
   GetJWTFlow create() => GetJWTFlow();
 }
 
-String _$getJWTFlowHash() => r'3354043f987c72e5c404e1dce4a5aebcd2d6e203';
+String _$getJWTFlowHash() => r'7832eaa0d62f8861c3dd8d57b192e634201ef1e5';
 
 abstract class _$GetJWTFlow extends $AsyncNotifier<AuthSession?> {
   FutureOr<AuthSession?> build();
@@ -288,7 +337,7 @@ final class RegisterFlowProvider
   RegisterFlow create() => RegisterFlow();
 }
 
-String _$registerFlowHash() => r'48b778908fc9430f1fbeecf97dd6b86c23c87c1e';
+String _$registerFlowHash() => r'fb4d0cb2e177e6deebfb4b1b28ea74b5641e2bbe';
 
 abstract class _$RegisterFlow extends $AsyncNotifier<String?> {
   FutureOr<String?> build();

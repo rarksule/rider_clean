@@ -65,4 +65,10 @@ class AuthRepositoryImpl implements AuthRepository {
     );
     return response;
   }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getAppSettings() async{
+    final response = await authDataSource.getAppSettings();
+    return response;
+  }
 }

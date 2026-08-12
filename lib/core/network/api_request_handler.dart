@@ -25,9 +25,9 @@ class ApiRequestHandler {
 
     headers ??= {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: await SecureStorage.getStringAsync(
+      HttpHeaders.authorizationHeader: "bearer ${await SecureStorage.getStringAsync(
         apiKeyKey,
-      ),
+      )}",
       HttpHeaders.cookieHeader:
           "accessToken:${await SecureStorage.getStringAsync(accessTokenKey)};",
       HttpHeaders.acceptHeader: 'application/json',

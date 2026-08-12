@@ -18,4 +18,6 @@ abstract class AuthRepository {
     required String phone,
   });
   Future<Either<Failure, AuthSession>> getJwt();
+  Future<Either<Failure, Map<String,dynamic>>> getAppSettings();
+  
 }

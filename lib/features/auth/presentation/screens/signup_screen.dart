@@ -12,7 +12,8 @@ import '../../../../core/constants/common.dart';
 import '../../../../core/constants/constants.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
-  const SignUpScreen({super.key});
+  final Map<String, dynamic> data;
+  const SignUpScreen({super.key,required this.data});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignUpScreenState();
@@ -35,6 +36,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   String? privacyPolicyUrl;
   String? termsConditionUrl;
   bool isAcceptedTc = true;
+  @override
+  void initState() {
+    super.initState();
+    privacyPolicyUrl = widget.data["privacy_policy_url"];
+          termsConditionUrl = widget.data["terms_condition_url"];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +274,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
     ref
         .read(registerFlowProvider.notifier)
-        .register(
+        .call(
           address: addressController.text,
           name: "${firstNameController.text} ${lastNameController.text}",
           email: emailController.text,

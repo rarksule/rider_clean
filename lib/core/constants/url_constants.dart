@@ -1,9 +1,10 @@
 class UrlConstants {
   UrlConstants._();
-  static const getUserDetail = "getUserDetail";
+  static const getUserDetail = "get-UserDetail";
   static const initializeLogin = "initialize-login";
   static const register = 'register';
   static const login = 'login';
+  static const commonData = "common-data";
   static const getJwt = 'get-jwt';
   static const refreshjwt = 'refresh';
   static const updateProfile = 'update-profile';

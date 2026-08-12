@@ -12,8 +12,8 @@ part 'splash_provider.g.dart';
 @riverpod
 SplashRemoteDatasource splashRemoteDataSource(Ref ref) {
   return SplashRemoteDatasource(
-    ref.read(nodeApiUrlProvider),
-    ref.read(phpApiUrlProvider),
+    phpUrl: ref.read(phpApiUrlProvider),
+    nodeUrl: ref.read(nodeApiUrlProvider),
   );
 }
 

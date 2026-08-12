@@ -103,7 +103,6 @@ const locationPermission = "assets/location-permissions.json";
 const String isFirstTimeKey = "isFirstTime";
 const String isLoggedInKey = "isLoggedIn";
 const String userIdkey = "userId";
-const String phoneVerifiedAtKey = "phoneVerifiedAt";
 const String active = "active";
 const String selectedLanguage = 'selectedLanguage';
 const String phoneNumber = "phoneNumber";

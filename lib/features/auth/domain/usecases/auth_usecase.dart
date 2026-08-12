@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:rider_clean/features/auth/presentation/provider/auth_provider.dart';
 import '../../../../core/error/failures.dart';
 import '../entity/auth_session.dart';
 import '../entity/login_result.dart';
@@ -12,6 +13,9 @@ class AuthUsecase {
   Future<Either<Failure, String>> sendOtp(String phoneNumber) {
     return repository.sendOtp(phone: phoneNumber);
   }
+
+   Future<Either<Failure, Map<String,dynamic>>> getAppSettings()=>repository.getAppSettings();
+  
 
   Future<Either<Failure, LoginResult>> login({
     required String phoneNumber,

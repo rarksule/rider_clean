@@ -55,13 +55,13 @@ class _VerifyPhoneScreenState extends ConsumerState<VerifyPhoneScreen> {
   }
 
   Future<void> reSendOtp() async {
-    ref.read(sendOtpFlowProvider.notifier).sendOtp(widget.phone);
+    ref.read(sendOtpFlowProvider.notifier).call(widget.phone);
   }
 
   Future<void> submit(String otp) async {
     ref
         .read(verifyOtpFlowProvider.notifier)
-        .verify(phoneNumber: widget.phone, otp: otp, otpId: otpId);
+        .call(phoneNumber: widget.phone, otp: otp, otpId: otpId);
   }
 
   Future<void> nextPage() async {

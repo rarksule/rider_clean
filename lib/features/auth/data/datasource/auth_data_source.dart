@@ -16,7 +16,7 @@ class AuthDataSource {
   final ApiUrl phpUrl;
   final ApiUrl nodeUrl; // Replace with your actual API base URL
 
-  AuthDataSource(this.nodeUrl, this.phpUrl);
+  AuthDataSource({required this.nodeUrl, required this.phpUrl});
 
   /// Step 1: Send OTP
   Future<Either<Failure, String>> sendOtp({required String phone}) async {
@@ -140,6 +140,33 @@ class AuthDataSource {
       );
       if (res.isSuccess) {
         return Right(res.data!["message"]);
+      } else {
+        throw ProcessException(res.message);
+      }
+    } on UnauthorizedException catch (e) {
+      return Left(InvalidCredentialsFailure(e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on JsonException catch (e) {
+      return Left(JsonFailure(e.message));
+    } on ProcessException catch (e) {
+      return Left(ProcessFailure(e.message));
+    } catch (_) {
+      return Left(const UnknownFailure());
+    }
+  }
+
+  Future<Either<Failure, Map<String, dynamic>>> getAppSettings() async {
+    try {
+      final url = nodeUrl.getUri(UrlConstants.commonData);
+      
+      final res = await ApiRequestHandler.request(
+        url,
+        method: HttpMethod.post,
+        body: {},
+      );
+      if (res.isSuccess) {
+        return Right(res.data!);
       } else {
         throw ProcessException(res.message);
       }

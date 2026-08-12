@@ -1,6 +1,7 @@
 // features/splash/data/datasources/splash_remote_datasource.dart
 
 import 'package:dartz/dartz.dart';
+import 'package:rider_clean/core/constants/enums.dart';
 import '../../../../core/constants/url_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -12,10 +13,10 @@ class SplashRemoteDatasource {
   final ApiUrl phpUrl;
   final ApiUrl nodeUrl;
 
-  SplashRemoteDatasource(this.phpUrl, this.nodeUrl);
+  SplashRemoteDatasource({required this.phpUrl,required this.nodeUrl});
 
   Future<Either<Failure, UserModel>> getUserDetail({
-    required int userId,
+    required String userId,
   }) async {
     try {
       final url = phpUrl.getUri(
@@ -23,7 +24,7 @@ class SplashRemoteDatasource {
         queryParameters: {"userId": userId},
       );
 
-      final res = await ApiRequestHandler.request(url);
+      final res = await ApiRequestHandler.request(url,method: HttpMethod.post);
       if (res.isSuccess) {
         final data = res.data!;
         return Right(UserModel.fromJson(data['data']));

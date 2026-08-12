@@ -8,7 +8,7 @@ import '../../../../core/constants/constants.dart';
 class SplashLocalDatasource {
   bool get isFirstTime => getBoolAsync(isFirstTimeKey, defaultValue: true);
 
-  bool get isLoggedIn => getStringAsync(phoneVerifiedAtKey).isNotEmpty;
+  bool get isLoggedIn => getBoolAsync(isLoggedInKey);
 
-  int get getUserId => getIntAsync(userIdkey);
+  String get getUserId => getStringAsync(userIdkey);
 }

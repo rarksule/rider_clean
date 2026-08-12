@@ -13,8 +13,8 @@ part 'auth_provider.g.dart';
 @riverpod
 AuthDataSource authDataSource(Ref ref) {
   return AuthDataSource(
-    ref.read(nodeApiUrlProvider),
-    ref.read(phpApiUrlProvider),
+    nodeUrl: ref.read(nodeApiUrlProvider),
+    phpUrl: ref.read(phpApiUrlProvider),
   );
 }
 
@@ -33,10 +33,26 @@ class SendOtpFlow extends _$SendOtpFlow {
   @override
   FutureOr<String> build() => '';
 
-  Future<void> sendOtp(String phone) async {
+  Future<void> call(String phone) async {
     state = const AsyncLoading();
 
     final result = await ref.read(authUsecaseProvider).sendOtp(phone);
+
+    state = result.fold(
+      (failure) => AsyncError(failure.message, StackTrace.current),
+      (voiData) => AsyncData(voiData),
+    );
+  }
+}
+
+@riverpod
+class GetAppSettings extends _$GetAppSettings {
+  @override
+  FutureOr<Map<String, dynamic>> build() => {};
+
+  Future<void> call() async {
+    state = AsyncLoading();
+    final result = await ref.read(authUsecaseProvider).getAppSettings();
 
     state = result.fold(
       (failure) => AsyncError(failure.message, StackTrace.current),
@@ -50,7 +66,7 @@ class VerifyOtpFlow extends _$VerifyOtpFlow {
   @override
   FutureOr<LoginResult?> build() => null;
 
-  Future<void> verify({
+  Future<void> call({
     required String phoneNumber,
     required String otp,
     required String otpId,
@@ -73,7 +89,7 @@ class GetJWTFlow extends _$GetJWTFlow {
   @override
   FutureOr<AuthSession?> build() => null;
 
-  Future<void> get() async {
+  Future<void> call() async {
     state = const AsyncLoading();
 
     final result = await ref.read(authUsecaseProvider).getJwt();
@@ -90,7 +106,7 @@ class RegisterFlow extends _$RegisterFlow {
   @override
   FutureOr<String?> build() => null;
 
-  Future<void> register({
+  Future<void> call({
     required String address,
     required String name,
     required String email,
@@ -108,44 +124,3 @@ class RegisterFlow extends _$RegisterFlow {
     );
   }
 }
-
-// @riverpod
-// class Auth extends _$Auth {
-//   late final AuthUsecase usecase;
-
-//   @override
-//   Future<void> build() async {
-//     usecase = ref.read(authUsecaseProvider);
-//     return;
-//   }
-
-//   Future<void> sendOtp(String phoneNumber) async {
-//     state = const AsyncLoading();
-//     try {
-//       await usecase.sendOtp(phoneNumber);
-//       state = const AsyncData(null);
-//     } catch (e, st) {
-//       state = AsyncError(e, st);
-//     }
-//   }
-
-//   Future<LoginResult?> login(String phoneNumber, String otp) async {
-//     state = const AsyncLoading();
-//     try {
-//       final loginResult = await usecase.login(phoneNumber, otp);
-//       state = AsyncData(loginResult);
-//     } catch (e, st) {
-//       state = AsyncError(e, st);
-//     }
-//   }
-
-//   Future<void> register(UserData userData, String name, String email) async {
-//     state = const AsyncLoading();
-//     try {
-//       await usecase.registerUser(userData, name, email);
-//       state = const AsyncData(null);
-//     } catch (e, st) {
-//       state = AsyncError(e, st);
-//     }
-//   }
-// }
