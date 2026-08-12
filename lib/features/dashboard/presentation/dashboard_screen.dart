@@ -10,10 +10,6 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Dashboard Screen"),
-      ),
-    );
+    return const Scaffold(body: Center(child: Text("Dashboard Screen")));
   }
 }

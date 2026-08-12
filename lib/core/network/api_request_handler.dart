@@ -23,22 +23,19 @@ class ApiRequestHandler {
     //   throw 'Your internet is not working';
     // }
 
-
     headers ??= {
       HttpHeaders.contentTypeHeader: 'application/json',
-      // HttpHeaders.authorizationHeader: await SecureStorage.getStringAsync(
-      //   apiKeyKey,
-      // ),
+      HttpHeaders.authorizationHeader: await SecureStorage.getStringAsync(
+        apiKeyKey,
+      ),
       HttpHeaders.cookieHeader:
           "accessToken:${await SecureStorage.getStringAsync(accessTokenKey)};",
-      // HttpHeaders.acceptHeader : 'application/json',
+      HttpHeaders.acceptHeader: 'application/json',
     };
     body ??= {};
 
     try {
-      log(
-        'Request: $method $url\nHeaders: $headers\nBody: $body',
-      );
+      log('Request: $method $url\nHeaders: $headers\nBody: $body');
 
       late http.Response response;
 
@@ -151,4 +148,3 @@ class ApiRequestHandler {
     }
   }
 }
-

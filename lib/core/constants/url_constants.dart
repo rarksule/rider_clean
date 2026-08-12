@@ -45,8 +45,6 @@ class UrlConstants {
   static const withdrawRequest = 'withdrawrequest-list?page=\$page';
 }
 
-
-
 // Future<GoogleMapSearchModel> searchAddressRequest({String? search}) async {
 //   return GoogleMapSearchModel.fromJson(await handleResponse(await buildHttpResponse(
 //       'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search',

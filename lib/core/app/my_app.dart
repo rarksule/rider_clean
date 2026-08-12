@@ -23,7 +23,7 @@ class MyApp extends ConsumerWidget {
       navigatorKey: navigatorKey,
       title: 'Rider App',
       theme: AppTheme.lightTheme,
-      themeMode: ThemeMode.light,// themeMode,
+      themeMode: ThemeMode.light, // themeMode,
       darkTheme: AppTheme.darkTheme,
       supportedLocales: LanguageDataModel.languageLocales(),
       localizationsDelegates: const [
@@ -34,7 +34,7 @@ class MyApp extends ConsumerWidget {
       ],
       localeResolutionCallback: (locale, supportedLocales) => locale,
       locale: Locale(selectedLanguage),
-      home:SplashScreen()
+      home: SplashScreen(),
     );
   }
 }

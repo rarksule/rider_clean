@@ -144,8 +144,8 @@ class IntroductionScreenState extends ConsumerState<IntroductionScreen> {
     );
   }
 
-  void init() async{
-  //  await Future.delayed(Duration(milliseconds: 10));
+  void init() async {
+    //  await Future.delayed(Duration(milliseconds: 10));
     final languagenotifier = ref.read(languageProvider.notifier);
     showModalBottomSheet(
       shape: RoundedRectangleBorder(

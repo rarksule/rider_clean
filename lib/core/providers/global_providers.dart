@@ -37,26 +37,26 @@ class Theme extends _$Theme {
   }
 }
 
-
 @riverpod
 ApiUrl nodeApiUrl(Ref ref) {
-  String nodeIp = String.fromEnvironment('NodeIp');
-  String mainIp = String.fromEnvironment('Ip', defaultValue: remoteUrl);
-  bool addPorts = bool.fromEnvironment('isLocal', defaultValue: usePorts);
+  const nodeIp = String.fromEnvironment('NodeIp');
+  const mainIp = String.fromEnvironment('Ip', defaultValue: remoteUrl);
+  const addPorts = bool.fromEnvironment('isLocal', defaultValue: usePorts);
   String baseUrl = nodeIp.isEmptyOrNull ? mainIp : nodeIp;
 
   return ApiUrl(
-    remoteBase: addPorts ? "$baseUrl:3000/api/v1" : "$baseUrl/api/v1",
+    remoteBase: addPorts ? "http://$baseUrl:3000/api/v1" : "$baseUrl/api/v1",
   );
 }
 
 @riverpod
 ApiUrl phpApiUrl(Ref ref) {
-  String phpIp = String.fromEnvironment('PHPIp');
-  String mainIp = String.fromEnvironment('Ip', defaultValue: remoteUrl);
-  bool addPorts = bool.fromEnvironment('isLocal', defaultValue: usePorts);
+  const phpIp = String.fromEnvironment('PHPIp');
+  const mainIp = String.fromEnvironment('Ip', defaultValue: remoteUrl);
+  const addPorts = bool.fromEnvironment('isLocal', defaultValue: usePorts);
   String baseUrl = phpIp.isEmptyOrNull ? mainIp : phpIp;
+
   return ApiUrl(
-    remoteBase: addPorts ? "$baseUrl:8000/api/v1" : "$baseUrl/api/v1",
+    remoteBase: addPorts ? "http://$baseUrl:8000/api/v1" : "$baseUrl/api/v1",
   );
 }

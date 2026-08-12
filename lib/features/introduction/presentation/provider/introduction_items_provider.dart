@@ -23,6 +23,6 @@ List<WalkThroughModelClass> introductionItems(Ref ref) {
       title: language.walkThrough3Title,
       subTitle: language.walkThrough3Subtitle,
       image: walk3,
-    )
+    ),
   ];
 }

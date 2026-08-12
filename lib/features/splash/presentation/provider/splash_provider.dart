@@ -38,7 +38,7 @@ GetSplashDestinationUseCase getSplashDestinationUseCase(Ref ref) {
 @riverpod
 class SplashState extends _$SplashState {
   @override
-  FutureOr<SplashDestination?> build() =>null;
+  FutureOr<SplashDestination?> build() => null;
 
   Future<void> resolveDestination() async {
     state = const AsyncLoading();

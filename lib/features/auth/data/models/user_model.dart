@@ -22,6 +22,4 @@ class UserModel extends UserEntity {
       address: json["address"] ?? '',
     );
   }
-
-
 }

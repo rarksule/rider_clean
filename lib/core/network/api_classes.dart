@@ -1,5 +1,3 @@
-
-
 class ApiUrl {
   final String remoteBase;
   ApiUrl({required this.remoteBase});

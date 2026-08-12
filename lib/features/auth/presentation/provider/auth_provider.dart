@@ -6,7 +6,6 @@ import '../../data/datasource/auth_data_source.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/entity/auth_session.dart';
 import '../../domain/entity/login_result.dart';
-import '../../domain/entity/user_entity.dart';
 import '../../domain/usecases/auth_usecase.dart';
 
 part 'auth_provider.g.dart';
@@ -101,7 +100,7 @@ class RegisterFlow extends _$RegisterFlow {
 
     final result = await ref
         .read(authUsecaseProvider)
-        .registerUser(address:address, phone:phone, name:name, email:email);
+        .registerUser(address: address, phone: phone, name: name, email: email);
 
     state = result.fold(
       (failure) => AsyncError(failure.message, StackTrace.current),

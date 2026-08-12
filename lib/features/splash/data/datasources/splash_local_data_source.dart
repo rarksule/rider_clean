@@ -12,4 +12,3 @@ class SplashLocalDatasource {
 
   int get getUserId => getIntAsync(userIdkey);
 }
-

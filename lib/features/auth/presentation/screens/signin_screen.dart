@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rider_clean/features/auth/presentation/screens/verify_phone_screen.dart';
-import 'package:rider_clean/features/permission/presentation/provider/notification_providers.dart';
 import '../../../../core/providers/global_providers.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants/common.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../notification/presentation/provider/notification_providers.dart';
 import '../provider/auth_provider.dart';
 import 'signup_screen.dart';
 
@@ -61,27 +61,28 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     }
   }
 
-  // Future<void> appSetting() async {
-  //   await getAppSettingApi().then((value) {
-  //     if (value.privacyPolicyModel != null) {
-  //       appStore.setPrivacyPolicy(value.privacyPolicyModel!.value.validate());
-  //       privacyPolicy = value.privacyPolicyModel!.value.validate();
-  //     }
-  //     if (value.termsCondition != null) {
-  //       appStore.setTermsCondition(value.termsCondition!.value.validate());
-  //       termsCondition = value.termsCondition!.value.validate();
-  //     }
-  //     setState(() {});
-  //   }).catchError((error) {
-  //     log(error.toString());
-  //   });
-  // }
+  Future<void> appSetting() async {
+    // await getAppSettingApi().then((value) {
+    //   if (value.privacyPolicyModel != null) {
+    //     appStore.setPrivacyPolicy(value.privacyPolicyModel!.value.validate());
+    //     privacyPolicy = value.privacyPolicyModel!.value.validate();
+    //   }
+    //   if (value.termsCondition != null) {
+    //     appStore.setTermsCondition(value.termsCondition!.value.validate());
+    //     termsCondition = value.termsCondition!.value.validate();
+    //   }
+    //   setState(() {});
+    // }).catchError((error) {
+    //   log(error.toString());
+    // });
+  }
   bool _hasNavigated = false;
 
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(languageProvider);
     final otpFlow = ref.watch(sendOtpFlowProvider);
+    final _ = ref.watch(notifcationProvider);
     ref.listen(sendOtpFlowProvider, (previous, next) {
       next.whenOrNull(
         data: (result) async {

@@ -27,7 +27,7 @@ class SecureStorage {
 
   /// Returns a StringList if exists in SharedPref
   static Future<List<String>?> getStringListAsync(String key) async {
-    return  (await storage.read(key: key))?.split(",").toList();
+    return (await storage.read(key: key))?.split(",").toList();
     // Make a copy of the list so that later mutations won't propagate
   }
 
@@ -80,29 +80,33 @@ class SecureStorage {
     return await storage.delete(key: key);
   }
 
-  static Future<void> setValue(String key, dynamic value, {bool print = true}) async {
-  if (value == null) {
-    if (print) log('$key - value is null');
-    return Future.value();
-  }
-  if (print) log('${value.runtimeType} - $key - $value');
+  static Future<void> setValue(
+    String key,
+    dynamic value, {
+    bool print = true,
+  }) async {
+    if (value == null) {
+      if (print) log('$key - value is null');
+      return Future.value();
+    }
+    if (print) log('${value.runtimeType} - $key - $value');
 
-  if (value is String) {
-    return await storage.write(key:key, value:value);
-  } else if (value is int) {
-    return await storage.write(key:key, value:value.toString());
-  } else if (value is bool) {
-    return await storage.write(key:key, value:value.toString());
-  } else if (value is double) {
-    return await storage.write(key:key, value:value.toString());
-  } else if (value is Map<String, dynamic>) {
-    return await storage.write(key:key, value:jsonEncode(value));
-  } else if (value is List<String>) {
-    return await storage.write(key:key, value:value.join(","));
-  } else {
-    throw ArgumentError(
-      'Invalid value ${value.runtimeType} - Must be a String, int, bool, double, Map<String, dynamic> or StringList',
-    );
+    if (value is String) {
+      return await storage.write(key: key, value: value);
+    } else if (value is int) {
+      return await storage.write(key: key, value: value.toString());
+    } else if (value is bool) {
+      return await storage.write(key: key, value: value.toString());
+    } else if (value is double) {
+      return await storage.write(key: key, value: value.toString());
+    } else if (value is Map<String, dynamic>) {
+      return await storage.write(key: key, value: jsonEncode(value));
+    } else if (value is List<String>) {
+      return await storage.write(key: key, value: value.join(","));
+    } else {
+      throw ArgumentError(
+        'Invalid value ${value.runtimeType} - Must be a String, int, bool, double, Map<String, dynamic> or StringList',
+      );
+    }
   }
-}
 }

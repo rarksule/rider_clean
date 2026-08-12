@@ -8,5 +8,5 @@ import '../../../auth/data/models/user_model.dart';
 abstract class SplashRepository {
   bool get isFirstTime;
   bool get isLoggedIn;
-  Future<Either<Failure,UserModel>> getUserStatus();
+  Future<Either<Failure, UserModel>> getUserStatus();
 }

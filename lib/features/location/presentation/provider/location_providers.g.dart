@@ -9,6 +9,54 @@ part of 'location_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
+@ProviderFor(locationDatasource)
+final locationDatasourceProvider = LocationDatasourceProvider._();
+
+final class LocationDatasourceProvider
+    extends
+        $FunctionalProvider<
+          LocationDatasource,
+          LocationDatasource,
+          LocationDatasource
+        >
+    with $Provider<LocationDatasource> {
+  LocationDatasourceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'locationDatasourceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$locationDatasourceHash();
+
+  @$internal
+  @override
+  $ProviderElement<LocationDatasource> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  LocationDatasource create(Ref ref) {
+    return locationDatasource(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(LocationDatasource value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<LocationDatasource>(value),
+    );
+  }
+}
+
+String _$locationDatasourceHash() =>
+    r'a041869f0b5d68f732bc5af3ca103600b5918838';
+
 @ProviderFor(locationRepository)
 final locationRepositoryProvider = LocationRepositoryProvider._();
 
@@ -55,7 +103,7 @@ final class LocationRepositoryProvider
 }
 
 String _$locationRepositoryHash() =>
-    r'f9f09a10a1e793c8d4766cb34ec58084deaa4776';
+    r'17a5cd20ce3d421abcbb3bd44ad890e7b4c896f1';
 
 @ProviderFor(locationUsecase)
 final locationUsecaseProvider = LocationUsecaseProvider._();
@@ -98,50 +146,6 @@ final class LocationUsecaseProvider
 }
 
 String _$locationUsecaseHash() => r'43a05d4df274028f606ac66a227886a50a4e309d';
-
-@ProviderFor(Permission)
-final permissionProvider = PermissionProvider._();
-
-final class PermissionProvider
-    extends $AsyncNotifierProvider<Permission, bool?> {
-  PermissionProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'permissionProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$permissionHash();
-
-  @$internal
-  @override
-  Permission create() => Permission();
-}
-
-String _$permissionHash() => r'77d1ef8800e7fe8681876c6abad5a1096dd9fd01';
-
-abstract class _$Permission extends $AsyncNotifier<bool?> {
-  FutureOr<bool?> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<bool?>, bool?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<AsyncValue<bool?>, bool?>,
-              AsyncValue<bool?>,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, build);
-  }
-}
 
 @ProviderFor(GeoLocation)
 final geoLocationProvider = GeoLocationProvider._();

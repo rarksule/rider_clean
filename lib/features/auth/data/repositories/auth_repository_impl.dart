@@ -7,7 +7,6 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entity/auth_session.dart';
 import '../../domain/entity/login_result.dart';
-import '../../domain/entity/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasource/auth_data_source.dart';
 

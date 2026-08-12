@@ -97,6 +97,7 @@ const appLogo = 'assets/images/logo_primary.png';
 const walk1 = 'assets/images/walk1.jpg';
 const walk2 = 'assets/images/walk1.jpg';
 const walk3 = 'assets/images/walk1.jpg';
+const locationPermission = "assets/location-permissions.json";
 
 // sharedpreferences keys
 const String isFirstTimeKey = "isFirstTime";
@@ -109,6 +110,7 @@ const String phoneNumber = "phoneNumber";
 const String fcmTokenKey = "Fcm Token";
 const String accessTokenKey = "AcessToken";
 const String apiKeyKey = "ApiKEY";
+const String locationDataKey = "locationData";
 
 // Strings
 const String defaultLanguage = 'en';
@@ -118,7 +120,7 @@ const int defaultOtpTimer = 60;
 
 const riderConst = 'RIDER';
 
-const remoteUrl = "http://172.20.76.23";
+const remoteUrl = "172.20.76.23";
 const phpurl = null;
 const nodeurl = null;
 const usePorts = true;

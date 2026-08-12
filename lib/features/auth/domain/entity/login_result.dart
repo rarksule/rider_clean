@@ -5,8 +5,5 @@ class LoginResult {
   final UserEntity user;
   final AuthSession session;
 
-  LoginResult({
-    required this.user,
-    required this.session,
-  });
+  LoginResult({required this.user, required this.session});
 }

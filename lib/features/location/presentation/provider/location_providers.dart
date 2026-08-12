@@ -1,5 +1,6 @@
 // presentation/providers/location_providers.dart
 import 'package:location/location.dart';
+import 'package:rider_clean/features/location/data/datasource/location_datasource.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../domain/repositories/location_repository.dart';
 import '../../data/repositories/location_repository_impl.dart';
@@ -8,40 +9,17 @@ import '../../domain/usecase/location_usecase.dart';
 part 'location_providers.g.dart';
 
 @riverpod
-LocationRepository locationRepository(Ref ref) =>
-    LocationRepositoryImpl(Location.instance);
+LocationDatasource locationDatasource(Ref ref) =>
+    LocationDatasource(location: Location.instance);
+
+@riverpod
+LocationRepository locationRepository(Ref ref) => LocationRepositoryImpl(
+  locationDatasource: ref.read(locationDatasourceProvider),
+);
 
 @riverpod
 LocationUsecase locationUsecase(Ref ref) =>
     LocationUsecase(ref.read(locationRepositoryProvider));
-
-@riverpod
-class Permission extends _$Permission {
-  @override
-  FutureOr<bool?> build() => false;
-
-  Future<bool> hasPermission() async {
-    state = AsyncLoading();
-    final permissionResult = await ref
-        .read(locationUsecaseProvider)
-        .hasPermission();
-    final serviceRresult = await ref
-        .read(locationUsecaseProvider)
-        .isServiceEnabled();
-    state = AsyncData(permissionResult && serviceRresult);
-
-    return permissionResult && serviceRresult;
-  }
-
-  Future<void> requestPermission() async {
-    final result = await ref.read(locationUsecaseProvider).requestPermission();
-
-    state = result.fold(
-      (failure) => AsyncError(failure.message, StackTrace.current),
-      (data) => AsyncData(data),
-    );
-  }
-}
 
 @riverpod
 class GeoLocation extends _$GeoLocation {

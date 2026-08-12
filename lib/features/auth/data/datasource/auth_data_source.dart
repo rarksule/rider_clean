@@ -64,10 +64,10 @@ class AuthDataSource {
         final data = res.data!;
         SecureStorage.setValue(apiKeyKey, data['data']['api_token']);
         final jwt = await getJwt();
-         
+
         return jwt.fold(
           (failure) => Left(failure),
-          (authSession) => Right(           
+          (authSession) => Right(
             LoginResult(
               user: UserModel.fromJson(data['data']),
               session: AuthSession(

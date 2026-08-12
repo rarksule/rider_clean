@@ -8,10 +8,11 @@ import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:rider_clean/features/auth/presentation/provider/auth_provider.dart';
 import 'package:rider_clean/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:rider_clean/features/permission/presentation/provider/location_providers.dart';
 import 'package:rider_clean/features/permission/presentation/screens/permission_screen.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/providers/global_providers.dart';
+import '../../../location/presentation/provider/location_providers.dart';
+import '../../../permission/presentation/provider/permission_provider.dart';
 
 class VerifyPhoneScreen extends ConsumerStatefulWidget {
   final String phone;
@@ -64,7 +65,9 @@ class _VerifyPhoneScreenState extends ConsumerState<VerifyPhoneScreen> {
   }
 
   Future<void> nextPage() async {
-    if (await ref.read(permissionProvider.notifier).hasPermission()) {
+    if (await ref
+        .read(myPermissionProvider.notifier)
+        .isAllPermissionsGranted()) {
       ref.read(geoLocationProvider.notifier).getLocation();
       DashBoardScreen().launch(getContext, isNewTask: true);
     } else {
@@ -80,6 +83,7 @@ class _VerifyPhoneScreenState extends ConsumerState<VerifyPhoneScreen> {
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(languageProvider);
+    final _ = ref.watch(myPermissionProvider);
     ref.listen(sendOtpFlowProvider, (previous, next) {
       next.whenOrNull(
         data: (result) {
